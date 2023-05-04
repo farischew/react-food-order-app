@@ -16,7 +16,6 @@ const cartReducer = (state, action) => {
       items: updatedItems,
       totalAmount: updatedTotalAmount,
     };
-  } else if (action.type === "REMOVE") {
   }
   return defaultCartState;
 };
@@ -31,7 +30,7 @@ const CartProvider = (props) => {
     dispatchCartAction({ type: "ADD", item: item });
   };
 
-  const remnoveItemToCartHandler = (item) => {
+  const remnoveItemToCartHandler = (id) => {
     dispatchCartAction({ type: "REMOVE", id: id });
   };
 
