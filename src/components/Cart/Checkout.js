@@ -14,7 +14,12 @@ const Checkout = (props) => {
       return;
     }
 
-    console.log(nameInput, streetInput, postalInput, cityInput);
+    props.onConfirm({
+      name: nameInput,
+      street: streetInput,
+      postal: postalInput,
+      city: cityInput,
+    });
   };
 
   const {

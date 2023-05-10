@@ -52,6 +52,19 @@ const Cart = (props) => {
     </div>
   );
 
+  const submitOrderHandler = (userData) => {
+    fetch(
+      "https://react-http-90692-default-rtdb.asia-southeast1.firebasedatabase.app/orders.json",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          user: userData,
+          orderedItems: cartCtx.items,
+        }),
+      }
+    );
+  };
+
   return (
     <Modal onHide={props.onHide}>
       {cartItems}
@@ -60,7 +73,9 @@ const Cart = (props) => {
         <span>{totalAmount}</span>
       </div>
       {!orderClicked && modalActions}
-      {orderClicked && <Checkout onClick={props.onHide} />}
+      {orderClicked && (
+        <Checkout onClick={props.onHide} onConfirm={submitOrderHandler} />
+      )}
     </Modal>
   );
 };
