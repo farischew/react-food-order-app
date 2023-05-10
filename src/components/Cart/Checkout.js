@@ -28,7 +28,6 @@ const Checkout = (props) => {
     hasError: nameInputError,
     onChangeHandler: nameChangeHandler,
     onBlurHandler: nameBlurHandler,
-    reset: nameReset,
   } = useInput((enteredValue) => enteredValue.trim() !== "");
   const {
     enteredValue: streetInput,
@@ -36,7 +35,6 @@ const Checkout = (props) => {
     hasError: streetInputError,
     onChangeHandler: streetChangeHandler,
     onBlurHandler: streetBlurHandler,
-    reset: streetReset,
   } = useInput((enteredValue) => enteredValue.trim() !== "");
   const {
     enteredValue: postalInput,
@@ -44,7 +42,6 @@ const Checkout = (props) => {
     hasError: postalInputError,
     onChangeHandler: postalChangeHandler,
     onBlurHandler: postalBlurHandler,
-    reset: postalReset,
   } = useInput((enteredValue) => enteredValue.trim() !== "");
   const {
     enteredValue: cityInput,
@@ -52,7 +49,6 @@ const Checkout = (props) => {
     hasError: cityInputError,
     onChangeHandler: cityChangeHandler,
     onBlurHandler: cityBlurHandler,
-    reset: cityReset,
   } = useInput((enteredValue) => enteredValue.trim() !== "");
 
   return (
@@ -74,7 +70,7 @@ const Checkout = (props) => {
       </div>
       <div
         className={`${classes.control} ${
-          nameInputError ? classes.invalid : ""
+          streetInputError ? classes.invalid : ""
         }`}
       >
         <label htmlFor="street">Your street</label>
@@ -89,7 +85,7 @@ const Checkout = (props) => {
       </div>
       <div
         className={`${classes.control} ${
-          nameInputError ? classes.invalid : ""
+          postalInputError ? classes.invalid : ""
         }`}
       >
         <label htmlFor="postal">Your postal</label>
@@ -102,9 +98,10 @@ const Checkout = (props) => {
         ></input>
         {postalInputError && <p>Please enter a valid postal</p>}
       </div>
+
       <div
         className={`${classes.control} ${
-          nameInputError ? classes.invalid : ""
+          cityInputError ? classes.invalid : ""
         }`}
       >
         <label htmlFor="city">Your city</label>

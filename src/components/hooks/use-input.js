@@ -4,10 +4,6 @@ const useInput = (validateInput) => {
   const [enteredValue, setEnteredValue] = useState("");
   const [isTouched, setIsTouched] = useState(false);
 
-  const reset = () => {
-    setEnteredValue("");
-  };
-
   const onChangeHandler = (event) => {
     setEnteredValue(event.target.value);
   };
@@ -30,7 +26,6 @@ const useInput = (validateInput) => {
     hasError,
     onChangeHandler,
     onBlurHandler,
-    reset,
   };
 };
 

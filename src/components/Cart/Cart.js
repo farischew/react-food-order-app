@@ -42,6 +42,7 @@ const Cart = (props) => {
 
     setIsSubmitting(false);
     setDidSubmitting(true);
+    cartCtx.clearCart();
   };
 
   const cartItems = (
@@ -87,7 +88,16 @@ const Cart = (props) => {
   );
 
   const isSubmittingModalContent = <p>Sending your order...</p>;
-  const didSubmitModalContent = <p>Successfully sent your order!</p>;
+  const didSubmitModalContent = (
+    <React.Fragment>
+      <p>Successfully sent your order!</p>
+      <div className={classes.actions}>
+        <button className={classes.button} onClick={props.onHide}>
+          Close
+        </button>
+      </div>
+    </React.Fragment>
+  );
 
   return (
     <Modal onHide={props.onHide}>
