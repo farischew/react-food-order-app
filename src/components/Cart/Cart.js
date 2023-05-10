@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import Modal from "../UI/Modal";
 import classes from "./Cart.module.css";
 import CartContext from "../../store/cart-context";
@@ -7,6 +7,9 @@ import Checkout from "./Checkout";
 
 const Cart = (props) => {
   const cartCtx = useContext(CartContext);
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [didSubmitting, setDidSubmitting] = useState(false);
 
   const [orderClicked, setOrderClicked] = useState(false);
 
@@ -22,6 +25,23 @@ const Cart = (props) => {
 
   const orderHandler = () => {
     setOrderClicked(true);
+  };
+
+  const submitOrderHandler = async (userData) => {
+    setIsSubmitting(true);
+    await fetch(
+      "https://react-http-90692-default-rtdb.asia-southeast1.firebasedatabase.app/orders.json",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          user: userData,
+          orderedItems: cartCtx.items,
+        }),
+      }
+    );
+
+    setIsSubmitting(false);
+    setDidSubmitting(true);
   };
 
   const cartItems = (
@@ -52,21 +72,8 @@ const Cart = (props) => {
     </div>
   );
 
-  const submitOrderHandler = (userData) => {
-    fetch(
-      "https://react-http-90692-default-rtdb.asia-southeast1.firebasedatabase.app/orders.json",
-      {
-        method: "POST",
-        body: JSON.stringify({
-          user: userData,
-          orderedItems: cartCtx.items,
-        }),
-      }
-    );
-  };
-
-  return (
-    <Modal onHide={props.onHide}>
+  const cartModalContent = (
+    <React.Fragment>
       {cartItems}
       <div className={classes.total}>
         <span>Total Amount</span>
@@ -76,6 +83,17 @@ const Cart = (props) => {
       {orderClicked && (
         <Checkout onClick={props.onHide} onConfirm={submitOrderHandler} />
       )}
+    </React.Fragment>
+  );
+
+  const isSubmittingModalContent = <p>Sending your order...</p>;
+  const didSubmitModalContent = <p>Successfully sent your order!</p>;
+
+  return (
+    <Modal onHide={props.onHide}>
+      {!isSubmitting && !didSubmitting && cartModalContent}
+      {isSubmitting && isSubmittingModalContent}
+      {!isSubmitting && didSubmitting && didSubmitModalContent}
     </Modal>
   );
 };
